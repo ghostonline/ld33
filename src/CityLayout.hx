@@ -117,7 +117,7 @@ class CityLayout extends Entity
         {
             var x = (pos.x + 1.5) * layout.tileWidth * layout.scale + layout.x;
             var y = (pos.y + 1) * layout.tileHeight * layout.scale + layout.y;
-            var building = new Building(x, y, population, hud);
+            var building = new Building(x, y, population, hud, this, pos.x, pos.y);
             scene.add(building);
         }
     }

@@ -17,10 +17,19 @@ class Building extends Entity
     var population:Population;
     var hud:HUD;
     var healthBarScale:Float;
+    var city:CityLayout;
+    var cityTileX:Int;
+    var cityTileY:Int;
 
-    public function new(x:Float=0, y:Float=0, population:Population, hud:HUD)
+    public function new(x:Float=0, y:Float=0, population:Population, hud:HUD, city:CityLayout, cityTileX:Int, cityTileY:Int)
     {
         super(x, y);
+        this.population = population;
+        this.hud = hud;
+        this.city = city;
+        this.cityTileX = cityTileX;
+        this.cityTileY = cityTileY;
+
         sprite = ImageFactory.createSpriteSheet("graphics/buildings.png", 48);
         addGraphic(sprite);
         sprite.originY = sprite.height - sprite.height / 4;
@@ -32,8 +41,6 @@ class Building extends Entity
 
         stage = 0;
         setStage(stage);
-        this.population = population;
-        this.hud = hud;
     }
 
     function setStage(idx:Int)
@@ -50,6 +57,7 @@ class Building extends Entity
             healthBar.visible = false;
             sprite.visible = false;
         }
+        city.setBuildingType(cityTileX, cityTileY, idx);
     }
 
     override public function update():Void
