@@ -58,5 +58,7 @@ class Building extends Entity
             setStage(stage);
             population.spawnCiviliansFromBuilding(x, y + 35, FloorPopulation);
         }
+
+        layer = ZOrder.layerByY(y);
     }
 }

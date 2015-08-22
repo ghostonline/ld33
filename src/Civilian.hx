@@ -50,6 +50,7 @@ class Civilian extends Entity
         if (x < 0 || HXP.width < x) { direction.x *= -1; }
         if (y < 0 || HXP.height < y) { direction.y *= -1; }
 
+        layer = ZOrder.layerByY(y);
     }
 
     override public function moveCollideX(e:Entity):Bool

@@ -24,11 +24,12 @@ class Police extends Entity
     var state:AIState;
     var decisionTimer:Float;
     var startDistance:Float;
+    var hud:HUD;
 
-    public function new(x:Float, y:Float)
+    public function new(x:Float, y:Float, hud:HUD)
     {
         super(x, y);
-
+        this.hud = hud;
         var img = ImageFactory.createRect(5, 10, 0x0033FF);
         img.originY = img.height - img.width / 2;
         graphic = img;
@@ -82,7 +83,7 @@ class Police extends Entity
         else if (state == AIState.Shooting)
         {
             if (decisionTimer <= 0) {
-                // Do damage
+                hud.hitWithBullet();
                 dashRandom();
             }
         }
@@ -92,5 +93,7 @@ class Police extends Entity
             startDistance -= direction.length;
             if (startDistance < 0) { shoot(); }
         }
+
+        layer = ZOrder.layerByY(y);
     }
 }
