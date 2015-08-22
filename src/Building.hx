@@ -40,7 +40,7 @@ class Building extends Entity
         graphic = img;
         if (stage < stages.length - 1)
         {
-            setHitbox(Math.floor(img.scaledWidth), Math.floor(img.scaledHeight), Math.floor(img.originX * img.scale), Math.floor(img.originY * img.scale));
+            ImageFactory.setEntityHitboxTo(this, img);
         }
         else
         {

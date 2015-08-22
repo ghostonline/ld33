@@ -31,6 +31,8 @@ class Civilian extends Entity
             direction.x = Math.cos(angle) * WalkSpeed;
             direction.y = Math.sin(angle) * WalkSpeed;
         }
+
+        ImageFactory.setEntityHitboxTo(this, img);
     }
 
     override public function update():Void
