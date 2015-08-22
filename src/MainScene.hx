@@ -2,16 +2,12 @@ import com.haxepunk.Scene;
 
 class MainScene extends Scene
 {
-    var civilians:Array<Civilian>;
+    var population:Population;
 
     public override function begin()
     {
-        civilians = new Array<Civilian>();
-        for (ii in 0...25)
-        {
-            var civ = new Civilian(100, 100);
-            civilians.push(civ);
-            add(civ);
-        }
+        population = new Population(this);
+        var building = new Building(100, 100, population);
+        add(building);
     }
 }
