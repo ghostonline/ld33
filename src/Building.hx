@@ -56,7 +56,7 @@ class Building extends Entity
         {
             stage = (stage + 1) % stages.length;
             setStage(stage);
-            population.spawnCiviliansFromBuilding(x, y + 15, FloorPopulation);
+            population.spawnCiviliansFromBuilding(x, y + 35, FloorPopulation);
         }
     }
 }

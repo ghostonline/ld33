@@ -17,7 +17,7 @@ class Civilian extends Entity
     {
         super(x, y);
         var img = ImageFactory.createRect(5, 10, 0xFF3300);
-        img.originY = 0;
+        img.originY = img.height - img.width / 2;
         graphic = img;
         direction = new Point();
         if (angle < 0)
