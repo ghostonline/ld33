@@ -12,10 +12,13 @@ class HUD extends Entity
     static inline var ScoreDigits = 10;
     static inline var HumanScore = 100;
     static inline var FloorScore = 500;
+    static inline var ShotShakeTime = 0.25;
+    static inline var MaxShakeOffset = 5.0;
 
     var flash:Image;
     var flashTimer:Float;
     var flashTotal:Float;
+    var shakeTimer:Float;
     var healthBar:Array<Image>;
     var scoreText:Text;
     var score:Int;
@@ -48,6 +51,7 @@ class HUD extends Entity
         scoreText.y = 20;
         addGraphic(scoreText);
         updateScore();
+        shakeTimer = 0;
     }
 
     public function hitWithBullet()
@@ -61,6 +65,7 @@ class HUD extends Entity
             var bar = healthBar.pop();
             bar.visible = false;
         }
+        shakeTimer = ShotShakeTime;
     }
 
     public function smashFloor()
@@ -103,6 +108,21 @@ class HUD extends Entity
             flashTimer -= HXP.elapsed;
             if (flashTimer <= 0) { flashTimer = 0; }
             flash.alpha = flashTimer / flashTotal;
+        }
+
+        if (shakeTimer > 0)
+        {
+            shakeTimer -= HXP.elapsed;
+            var dx = (HXP.random - 0.5) * MaxShakeOffset;
+            var dy = (HXP.random - 0.5) * MaxShakeOffset;
+            if (shakeTimer <= 0)
+            {
+                dx = 0;
+                dy = 0;
+            }
+            x = dx;
+            y = dy;
+            HXP.camera.setTo(dx, dy);
         }
     }
 }
