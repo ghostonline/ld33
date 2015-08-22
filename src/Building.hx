@@ -6,6 +6,7 @@ import com.haxepunk.utils.Input;
 
 class Building extends Entity
 {
+    static inline var FloorPopulation = 10;
 
     var stages:Array<Image>;
     var stage:Int;
@@ -49,7 +50,7 @@ class Building extends Entity
         {
             stage = (stage + 1) % stages.length;
             setStage(stage);
-            population.spawnCivilian(x, y + 15);
+            population.spawnCiviliansFromBuilding(x, y + 15, FloorPopulation);
         }
     }
 }

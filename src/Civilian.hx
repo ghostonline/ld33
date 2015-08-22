@@ -13,16 +13,24 @@ class Civilian extends Entity
 
     var direction:Point;
 
-    public function new(x:Float=0, y:Float=0)
+    public function new(x:Float=0, y:Float=0, angle:Float=-1)
     {
         super(x, y);
         var img = ImageFactory.createRect(5, 10, 0xFF3300);
         img.originY = 0;
         graphic = img;
         direction = new Point();
-        direction.x = HXP.random - 0.5;
-        direction.y = HXP.random - 0.5;
-        direction.normalize(WalkSpeed);
+        if (angle < 0)
+        {
+            direction.x = Math.random() - 0.5;
+            direction.y = Math.random() - 0.5;
+            direction.normalize(WalkSpeed);
+        }
+        else
+        {
+            direction.x = Math.cos(angle) * WalkSpeed;
+            direction.y = Math.sin(angle) * WalkSpeed;
+        }
     }
 
     override public function update():Void
