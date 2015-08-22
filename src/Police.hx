@@ -23,7 +23,7 @@ class Police extends Entity
     var direction:Point;
     var state:AIState;
     var decisionTimer:Float;
-    var startX:Int;
+    var startDistance:Float;
 
     public function new(x:Float, y:Float)
     {
@@ -44,7 +44,7 @@ class Police extends Entity
         direction.y = 0;
         direction.normalize(WalkSpeed);
         state = AIState.EnteringScreen;
-        startX = Math.floor(HXP.random * HXP.halfWidth + HXP.halfWidth / 2);
+        startDistance = HXP.random * HXP.halfWidth + HXP.halfWidth / 2;
     }
 
     function dashRandom()
@@ -89,8 +89,8 @@ class Police extends Entity
         else if (state == AIState.EnteringScreen)
         {
             moveBy(direction.x, direction.y, Building.CollisionType);
-            startX -= Math.floor(Math.abs(direction.x));
-            if (startX < 0) { shoot(); }
+            startDistance -= direction.length;
+            if (startDistance < 0) { shoot(); }
         }
     }
 }

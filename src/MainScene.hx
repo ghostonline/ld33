@@ -1,3 +1,4 @@
+import com.haxepunk.HXP;
 import com.haxepunk.Scene;
 
 class MainScene extends Scene
@@ -11,6 +12,8 @@ class MainScene extends Scene
         add(building);
 
         var police = new Police(-10, 200);
+        add(police);
+        var police = new Police(HXP.width + 10, 300);
         add(police);
     }
 }
