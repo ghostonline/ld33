@@ -41,7 +41,6 @@ class Building extends Entity
 
         stage = 0;
         setStage(stage);
-        type = CollisionType;
         this.population = population;
         this.hud = hud;
     }
