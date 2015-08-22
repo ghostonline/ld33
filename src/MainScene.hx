@@ -3,12 +3,13 @@ import com.haxepunk.Scene;
 
 class MainScene extends Scene
 {
-    static inline var PoliceStartInterval = 5;
+    static inline var PoliceSpawnInterval = 5;
+    static inline var PoliceMinInterval = 1;
+    static inline var PoliceIntervalDecrease = 0.333;
 
     var population:Population;
     var hud:HUD;
     var policeSpawnTimer:Float;
-    var policeSpawnInterval:Float;
     var policeSpawnLanes:Array<Int>;
 
     public override function begin()
@@ -30,7 +31,7 @@ class MainScene extends Scene
         var building = new Building(200, 300, population, hud);
         add(building);
 
-        policeSpawnTimer = policeSpawnInterval = PoliceStartInterval;
+        policeSpawnTimer = PoliceSpawnInterval;
         policeSpawnLanes = [
             100,
             200,
@@ -56,7 +57,7 @@ class MainScene extends Scene
             if (policeSpawnTimer <= 0)
             {
                 spawnCop();
-                policeSpawnTimer = policeSpawnInterval;
+                policeSpawnTimer = Math.max(PoliceSpawnInterval - hud.floorSmashed * PoliceIntervalDecrease, PoliceMinInterval);
             }
         }
     }

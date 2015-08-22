@@ -22,6 +22,7 @@ class HUD extends Entity
     var healthBar:Array<Image>;
     var scoreText:Text;
     var score:Int;
+    public var floorSmashed(default, null):Int;
 
     public function new()
     {
@@ -52,6 +53,7 @@ class HUD extends Entity
         addGraphic(scoreText);
         updateScore();
         shakeTimer = 0;
+        floorSmashed = 0;
     }
 
     public function shake()
@@ -77,6 +79,7 @@ class HUD extends Entity
     {
         score += FloorScore;
         updateScore();
+        floorSmashed += 1;
     }
 
     public function smashHuman()
