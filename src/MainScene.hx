@@ -11,8 +11,8 @@ class MainScene extends Scene
         hud = new HUD();
         add(hud);
 
-        population = new Population(this);
-        var building = new Building(100, 100, population);
+        population = new Population(this, hud);
+        var building = new Building(100, 100, population, hud);
         add(building);
 
         var police = new Police(-10, 200, hud);

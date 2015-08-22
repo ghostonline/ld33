@@ -70,6 +70,7 @@ class Police extends Entity
         if (Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
         {
             scene.remove(this);
+            hud.smashHuman();
         }
 
         decisionTimer -= HXP.elapsed;

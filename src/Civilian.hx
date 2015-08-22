@@ -14,8 +14,9 @@ class Civilian extends Entity
     static inline var StompRange = 20;
 
     var direction:Point;
+    var hud:HUD;
 
-    public function new(x:Float=0, y:Float=0, angle:Float=-1)
+    public function new(hud:HUD, x:Float, y:Float, angle:Float=-1)
     {
         super(x, y);
         var img = ImageFactory.createRect(5, 10, 0xFF3300);
@@ -35,6 +36,7 @@ class Civilian extends Entity
         }
 
         ImageFactory.setEntityHitboxTo(this, img);
+        this.hud = hud;
     }
 
     override public function update():Void
@@ -44,6 +46,7 @@ class Civilian extends Entity
         if (Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
         {
             scene.remove(this);
+            hud.smashHuman();
         }
 
         moveBy(direction.x, direction.y, Building.CollisionType);

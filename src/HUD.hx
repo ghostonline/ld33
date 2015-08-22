@@ -2,17 +2,23 @@ package ;
 
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Text;
 import com.haxepunk.HXP;
 
 class HUD extends Entity
 {
     static inline var BulletFlashTime = 0.25;
     static inline var StartingHealth = 15;
+    static inline var ScoreDigits = 10;
+    static inline var HumanScore = 100;
+    static inline var FloorScore = 500;
 
     var flash:Image;
     var flashTimer:Float;
     var flashTotal:Float;
     var healthBar:Array<Image>;
+    var scoreText:Text;
+    var score:Int;
 
     public function new()
     {
@@ -31,10 +37,17 @@ class HUD extends Entity
             var barSpacing = bar.scaledHeight + 2;
 
             bar.x = HXP.width - 20;
-            bar.y = 20 + barSpacing * (StartingHealth - ii - 1);
+            bar.y = HXP.height - 20 - barSpacing * ii;
             addGraphic(bar);
             healthBar.push(bar);
         }
+
+        score = 0;
+        scoreText = new Text();
+        scoreText.x = 20;
+        scoreText.y = 20;
+        addGraphic(scoreText);
+        updateScore();
     }
 
     public function hitWithBullet()
@@ -48,6 +61,38 @@ class HUD extends Entity
             var bar = healthBar.pop();
             bar.visible = false;
         }
+    }
+
+    public function smashFloor()
+    {
+        score += FloorScore;
+        updateScore();
+    }
+
+    public function smashHuman()
+    {
+        score += HumanScore;
+        updateScore();
+    }
+
+    function updateScore()
+    {
+        var i:Float = score;
+        var count = 0;
+        do
+        {
+            count++;
+            i /= 10;
+        } while (i >= 1);
+
+        var buf = new StringBuf();
+        count = ScoreDigits - count;
+        for (ii in 0...count)
+        {
+            buf.add("0");
+        }
+        buf.add(score);
+        scoreText.text = buf.toString();
     }
 
     override public function update():Void

@@ -12,8 +12,9 @@ class Building extends Entity
     var stages:Array<Image>;
     var stage:Int;
     var population:Population;
+    var hud:HUD;
 
-    public function new(x:Float=0, y:Float=0, population:Population)
+    public function new(x:Float=0, y:Float=0, population:Population, hud:HUD)
     {
         super(x, y);
         stages = [
@@ -32,6 +33,7 @@ class Building extends Entity
         setStage(stage);
         type = CollisionType;
         this.population = population;
+        this.hud = hud;
     }
 
     function setStage(idx:Int)
@@ -57,6 +59,7 @@ class Building extends Entity
             stage = (stage + 1) % stages.length;
             setStage(stage);
             population.spawnCiviliansFromBuilding(x, y + 35, FloorPopulation);
+            hud.smashFloor();
         }
 
         layer = ZOrder.layerByY(y);
