@@ -22,9 +22,9 @@ class Building extends Entity
     {
         super(x, y);
         stages = [
-            ImageFactory.createRect(25, 60, 0xA52A2A),
-            ImageFactory.createRect(25, 45, 0xA52A2A),
             ImageFactory.createRect(25, 30, 0xA52A2A),
+            ImageFactory.createRect(25, 25, 0xA52A2A),
+            ImageFactory.createRect(25, 20, 0xA52A2A),
             ImageFactory.createRect(25, 15, 0x808080),
         ];
         for (img in stages) { addGraphic(img); img.visible = false; }
