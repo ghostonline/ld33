@@ -2,6 +2,7 @@ package ;
 
 import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.utils.Input;
 
 class Building extends Entity
@@ -9,7 +10,7 @@ class Building extends Entity
     static inline var FloorPopulation = 5;
     static inline var FloorHealth = 6;
 
-    var stages:Array<Image>;
+    var sprite:Spritemap;
     var health:Int;
     var healthBar:Image;
     var stage:Int;
@@ -20,19 +21,9 @@ class Building extends Entity
     public function new(x:Float=0, y:Float=0, population:Population, hud:HUD)
     {
         super(x, y);
-        stages = [
-            ImageFactory.createRect(25, 30, 0xA52A2A),
-            ImageFactory.createRect(25, 25, 0xA52A2A),
-            ImageFactory.createRect(25, 20, 0xA52A2A),
-            ImageFactory.createRect(25, 15, 0x808080),
-        ];
-        for (img in stages) { addGraphic(img); img.visible = false; }
-        var base = stages.pop();
-        for (img in stages)
-        {
-            img.originY = img.height - base.originY;
-        }
-        stages.push(base);
+        sprite = ImageFactory.createSpriteSheet("graphics/buildings.png", 48);
+        addGraphic(sprite);
+        sprite.originY = sprite.height - sprite.height / 4;
 
         health = FloorHealth;
         healthBar = ImageFactory.createRect(20, 2, 0x00FF00);
@@ -47,19 +38,18 @@ class Building extends Entity
 
     function setStage(idx:Int)
     {
-        var img = stages[idx];
-        if (stage < stages.length - 1)
+        sprite.frame = idx;
+        if (stage < sprite.frameCount)
         {
-            ImageFactory.setEntityHitboxTo(this, img);
+            ImageFactory.setEntityHitboxTo(this, sprite);
             healthBar.visible = true;
         }
         else
         {
             setHitbox();
             healthBar.visible = false;
+            sprite.visible = false;
         }
-
-        for (stageIdx in 0...stages.length) { stages[stageIdx].visible = stageIdx == idx; }
     }
 
     override public function update():Void
@@ -71,7 +61,7 @@ class Building extends Entity
             --health;
             if (health <= 0)
             {
-                stage = (stage + 1) % stages.length;
+                ++stage;
                 setStage(stage);
                 population.spawnCiviliansFromBuilding(x, y + 35, FloorPopulation);
                 hud.smashFloor();
