@@ -18,6 +18,7 @@ class MainScene extends Scene
         add(hud);
 
         population = new Population(this, hud);
+        /*
         var building = new Building(100, 100, population, hud);
         add(building);
         var building = new Building(200, 100, population, hud);
@@ -30,6 +31,7 @@ class MainScene extends Scene
         add(building);
         var building = new Building(200, 300, population, hud);
         add(building);
+        */
 
         policeSpawnTimer = PoliceSpawnInterval;
         policeSpawnLanes = [
@@ -38,6 +40,9 @@ class MainScene extends Scene
             300,
             400,
         ];
+
+        var layout = new CityLayout();
+        add(layout);
     }
 
     function spawnCop()

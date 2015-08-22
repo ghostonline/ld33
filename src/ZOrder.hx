@@ -2,10 +2,12 @@ package ;
 
 class ZOrder
 {
-    public static inline var HUD = 1;
+    static inline var Entities = 480;
+    public static inline var Roads = 481;
+    public static inline var HUD = 0;
 
     public static function layerByY(y:Float)
     {
-        return Math.floor(y);
+        return Entities - Math.floor(y);
     }
 }
