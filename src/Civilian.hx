@@ -49,7 +49,7 @@ class Civilian extends Entity
             hud.smashHuman();
         }
 
-        moveBy(direction.x, direction.y, Building.CollisionType);
+        moveBy(direction.x, direction.y, CityLayout.CollisionType);
         if (x < 0 || HXP.width < x) { direction.x *= -1; }
         if (y < 0 || HXP.height < y) { direction.y *= -1; }
 

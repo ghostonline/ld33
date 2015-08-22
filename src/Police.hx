@@ -75,7 +75,7 @@ class Police extends Entity
         decisionTimer -= HXP.elapsed;
         if (state == AIState.Running)
         {
-            moveBy(direction.x, direction.y, Building.CollisionType);
+            moveBy(direction.x, direction.y, CityLayout.CollisionType);
             if (x < 0 || HXP.width < x) { direction.x *= -1; x = HXP.clamp(x, 0, HXP.width); }
             if (y < 0 || HXP.height < y) { direction.y *= -1; y = HXP.clamp(y, 0, HXP.height); }
             if (decisionTimer <= 0) { shoot(); }
@@ -89,7 +89,7 @@ class Police extends Entity
         }
         else if (state == AIState.EnteringScreen)
         {
-            moveBy(direction.x, direction.y, Building.CollisionType);
+            moveBy(direction.x, direction.y, CityLayout.CollisionType);
             startDistance -= direction.length;
             if (startDistance < 0) { shoot(); }
         }

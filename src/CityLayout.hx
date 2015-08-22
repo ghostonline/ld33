@@ -6,6 +6,7 @@ import com.haxepunk.masks.Grid;
 
 class CityLayout extends Entity
 {
+    public static inline var CollisionType = "building";
 
     public function new()
     {
@@ -76,6 +77,7 @@ class CityLayout extends Entity
         collider.loadFrom2DArray(collisionData);
         mask = collider;
         layer = ZOrder.Roads;
+        type = CollisionType;
     }
 
 }
