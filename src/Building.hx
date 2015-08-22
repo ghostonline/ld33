@@ -6,7 +6,7 @@ import com.haxepunk.utils.Input;
 
 class Building extends Entity
 {
-    static inline var FloorPopulation = 10;
+    static inline var FloorPopulation = 5;
     static inline var FloorHealth = 6;
     public static inline var CollisionType = "building";
 

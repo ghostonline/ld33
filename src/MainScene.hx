@@ -19,6 +19,16 @@ class MainScene extends Scene
         population = new Population(this, hud);
         var building = new Building(100, 100, population, hud);
         add(building);
+        var building = new Building(200, 100, population, hud);
+        add(building);
+        var building = new Building(100, 200, population, hud);
+        add(building);
+        var building = new Building(200, 200, population, hud);
+        add(building);
+        var building = new Building(100, 300, population, hud);
+        add(building);
+        var building = new Building(200, 300, population, hud);
+        add(building);
 
         policeSpawnTimer = policeSpawnInterval = PoliceStartInterval;
         policeSpawnLanes = [
