@@ -13,13 +13,6 @@ class Population
         civilians = new Array<Civilian>();
     }
 
-    public function spawnCivilian(x:Float, y:Float)
-    {
-        var civ = new Civilian(x, y);
-        scene.add(civ);
-        civilians.push(civ);
-    }
-
     public function spawnCiviliansFromBuilding(x:Float, y:Float, count:Int)
     {
         for (ii in 0...count)
