@@ -80,6 +80,7 @@ class Building extends Entity
                 health = FloorHealth;
             }
             healthBar.scaleX = healthBarScale * health / FloorHealth;
+            hud.shake();
         }
 
         layer = ZOrder.layerByY(y);

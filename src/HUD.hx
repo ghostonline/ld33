@@ -54,6 +54,11 @@ class HUD extends Entity
         shakeTimer = 0;
     }
 
+    public function shake()
+    {
+        shakeTimer = ShotShakeTime;
+    }
+
     public function hitWithBullet()
     {
         flash.alpha = 1;
