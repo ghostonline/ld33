@@ -9,5 +9,8 @@ class MainScene extends Scene
         population = new Population(this);
         var building = new Building(100, 100, population);
         add(building);
+
+        var police = new Police(-10, 200);
+        add(police);
     }
 }

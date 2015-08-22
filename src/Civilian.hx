@@ -11,7 +11,7 @@ import com.haxepunk.utils.Input;
 class Civilian extends Entity
 {
     static inline var WalkSpeed = 2.5;
-    static inline var StompRange = 10;
+    static inline var StompRange = 20;
 
     var direction:Point;
 
