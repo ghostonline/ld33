@@ -6,10 +6,12 @@ import com.haxepunk.HXP;
 import com.haxepunk.Mask;
 import com.haxepunk.graphics.Image;
 import openfl.geom.Point;
+import com.haxepunk.utils.Input;
 
 class Civilian extends Entity
 {
-    static inline var WalkSpeed = 5;
+    static inline var WalkSpeed = 2.5;
+    static inline var StompRange = 10;
 
     var direction:Point;
 
@@ -38,9 +40,16 @@ class Civilian extends Entity
     override public function update():Void
     {
         super.update();
+
+        if (Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
+        {
+            scene.remove(this);
+        }
+
         moveBy(direction.x, direction.y, Building.CollisionType);
         if (x < 0 || HXP.width < x) { direction.x *= -1; }
         if (y < 0 || HXP.height < y) { direction.y *= -1; }
+
     }
 
     override public function moveCollideX(e:Entity):Bool
