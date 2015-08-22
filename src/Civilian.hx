@@ -41,4 +41,15 @@ class Civilian extends Entity
         if (y < 0 || HXP.height < y) { direction.y *= -1; }
     }
 
+    override public function moveCollideX(e:Entity):Bool
+    {
+        direction.x *= -1;
+        return super.moveCollideX(e);
+    }
+
+    override public function moveCollideY(e:Entity):Bool
+    {
+        direction.y *= -1;
+        return super.moveCollideY(e);
+    }
 }
