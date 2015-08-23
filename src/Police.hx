@@ -16,7 +16,7 @@ enum AIState
 class Police extends Entity
 {
     static inline var StompRange = 20;
-    static inline var WalkSpeed = 3;
+    static inline var WalkSpeed = 2;
     static inline var ShootDelay = 1.0;
     static inline var MaxRunTime = 1.5;
     static inline var MinRunTime = 0.5;

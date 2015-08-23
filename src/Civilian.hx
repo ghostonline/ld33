@@ -11,18 +11,21 @@ import com.haxepunk.utils.Input;
 
 class Civilian extends Entity
 {
-    static inline var WalkSpeed = 2.5;
+    static inline var WalkSpeed = 1.5;
     static inline var StompRange = 20;
 
     var direction:Point;
     var hud:HUD;
     var image:Spritemap;
+    var dead:Bool;
 
     public function new(hud:HUD, x:Float, y:Float, angle:Float=-1)
     {
         super(x, y);
-        image = ImageFactory.createSpriteSheet("graphics/civilians.png", 6);
+        image = ImageFactory.createSpriteSheet("graphics/civilians.png", 12);
         image.add("walk", [0, 1], 4, true);
+        image.add("dead_up", [2]);
+        image.add("dead_down", [3]);
         image.play("walk");
         image.originY = image.height - image.width / 2;
         graphic = image;
@@ -41,20 +44,26 @@ class Civilian extends Entity
 
         ImageFactory.setEntityHitboxTo(this, image);
         this.hud = hud;
-    }
-
-    function updateGraphics()
-    {
+        this.dead = false;
     }
 
     override public function update():Void
     {
         super.update();
 
-        if (Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
+        if (dead) { direction.x *= 0.95; direction.y *= 0.95; }
+
+        if (!dead && Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
         {
-            scene.remove(this);
             hud.smashHuman();
+            direction.x = x - Input.mouseX;
+            direction.y = y - Input.mouseY;
+            direction.normalize(WalkSpeed);
+
+            if (direction.y > 0) { image.play("dead_down"); }
+            else { image.play("dead_up"); }
+            dead = true;
+            setHitbox();
         }
 
         moveBy(direction.x, direction.y, CityLayout.CollisionType);

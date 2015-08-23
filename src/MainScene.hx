@@ -21,10 +21,13 @@ class MainScene extends Scene
 
         policeSpawnTimer = PoliceSpawnInterval;
         policeSpawnLanes = [
-            100,
-            200,
-            300,
-            400,
+            40,
+            160,
+            165,
+            170,
+            455,
+            366,
+            467,
         ];
 
         var layout = new CityLayout();
