@@ -1,5 +1,6 @@
 import com.haxepunk.HXP;
 import com.haxepunk.Scene;
+import com.haxepunk.utils.Input;
 
 class MainScene extends Scene
 {
@@ -7,6 +8,7 @@ class MainScene extends Scene
     static inline var PoliceMinInterval = 1;
     static inline var PoliceIntervalDecrease = 0.333;
 
+    var tutorial:Tutorial;
     var population:Population;
     var hud:HUD;
     var policeSpawnTimer:Float;
@@ -14,7 +16,8 @@ class MainScene extends Scene
 
     public override function begin()
     {
-        add(new Tutorial());
+        tutorial = new Tutorial();
+        add(tutorial);
 
         hud = new HUD();
         add(hud);
@@ -47,6 +50,18 @@ class MainScene extends Scene
     override public function update()
     {
         super.update();
+
+        if (tutorial != null)
+        {
+            if (Input.mousePressed)
+            {
+                remove(tutorial);
+                tutorial = null;
+            }
+
+            return;
+        }
+
         if (policeSpawnTimer > 0)
         {
             policeSpawnTimer -= HXP.elapsed;
