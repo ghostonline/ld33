@@ -10,6 +10,8 @@ import com.haxepunk.HXP;
 
 class Building extends Entity
 {
+    public static inline var CollisionType = "building";
+
     static inline var FloorPopulation = 5;
     static inline var FloorHealth = 6;
     static inline var PunchParticleCount = 4;
@@ -67,6 +69,7 @@ class Building extends Entity
 
         stage = 0;
         setStage(stage);
+        type = CollisionType;
     }
 
     function setStage(idx:Int)

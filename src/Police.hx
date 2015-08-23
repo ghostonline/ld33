@@ -69,11 +69,18 @@ class Police extends Entity
         sprite.play("walk");
     }
 
-    function shoot()
+    function tryShoot()
     {
-        state = AIState.Shooting;
-        decisionTimer = ShootDelay;
-        sprite.play("aim");
+        if (collide(Building.CollisionType, x, y) == null)
+        {
+            state = AIState.Shooting;
+            decisionTimer = ShootDelay;
+            sprite.play("aim");
+        }
+        else
+        {
+            dashRandom();
+        }
     }
 
     override public function update():Void
@@ -102,7 +109,7 @@ class Police extends Entity
             moveBy(direction.x, direction.y, CityLayout.CollisionType);
             if (x < 0 || HXP.width < x) { direction.x *= -1; x = HXP.clamp(x, 0, HXP.width); }
             if (y < 0 || HXP.height < y) { direction.y *= -1; y = HXP.clamp(y, 0, HXP.height); }
-            if (decisionTimer <= 0 && state == AIState.Running) { shoot(); }
+            if (decisionTimer <= 0 && state == AIState.Running) { tryShoot(); }
         }
         else if (state == AIState.Shooting)
         {
@@ -115,7 +122,7 @@ class Police extends Entity
         {
             moveBy(direction.x, direction.y, CityLayout.CollisionType);
             startDistance -= direction.length;
-            if (startDistance < 0) { shoot(); }
+            if (startDistance < 0) { tryShoot(); }
         }
 
         layer = ZOrder.layerByY(y);

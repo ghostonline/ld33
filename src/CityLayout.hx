@@ -8,7 +8,7 @@ typedef BuildingTile = { x:Int, y:Int };
 
 class CityLayout extends Entity
 {
-    public static inline var CollisionType = "building";
+    public static inline var CollisionType = "citylayout";
     static inline var BuildingTileID = 49;
 
     var layout:Tilemap;
