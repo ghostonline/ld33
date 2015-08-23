@@ -16,7 +16,6 @@ class MonsterAttack
 
         if (pressed && scene.collidePoint(Building.CollisionType, x, y) == null)
         {
-            SoundPlayer.stomp();
             stompFloor = pressed;
         }
         else

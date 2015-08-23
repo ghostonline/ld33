@@ -15,9 +15,9 @@ class ImageFactory
         return img;
     }
 
-    public static function createSpriteSheet(file:String, frameWidth:Int)
+    public static function createSpriteSheet(file:String, frameWidth:Int=0, frameHeight:Int=0)
     {
-        var img = new Spritemap(file, frameWidth);
+        var img = new Spritemap(file, frameWidth, frameHeight);
         img.scale = 2;
         img.smooth = false;
         img.centerOrigin();

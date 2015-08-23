@@ -15,6 +15,7 @@ class MainScene extends Scene
     var policeSpawnTimer:Float;
     var policeSpawnLanes:Array<Int>;
     var startTutorial:Bool;
+    var cracks:Cracks;
 
     public function new(tutorial:Bool = true)
     {
@@ -33,6 +34,9 @@ class MainScene extends Scene
 
         hud = new HUD();
         add(hud);
+
+        cracks = new Cracks();
+        add(cracks);
 
         population = new Population(this, hud);
 
@@ -95,6 +99,12 @@ class MainScene extends Scene
         }
 
         MonsterAttack.update(hud, this);
+
+        if (MonsterAttack.stompFloor)
+        {
+            SoundPlayer.stomp();
+            cracks.spawn(MonsterAttack.x, MonsterAttack.y);
+        }
 
         if (policeSpawnTimer > 0 && !hud.killCops())
         {
