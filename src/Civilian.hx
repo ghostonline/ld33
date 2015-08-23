@@ -2,6 +2,7 @@ package ;
 
 import com.haxepunk.Entity;
 import com.haxepunk.Graphic;
+import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import com.haxepunk.Mask;
 import com.haxepunk.graphics.Image;
@@ -15,13 +16,16 @@ class Civilian extends Entity
 
     var direction:Point;
     var hud:HUD;
+    var image:Spritemap;
 
     public function new(hud:HUD, x:Float, y:Float, angle:Float=-1)
     {
         super(x, y);
-        var img = ImageFactory.createRect(5, 10, 0xFF3300);
-        img.originY = img.height - img.width / 2;
-        graphic = img;
+        image = ImageFactory.createSpriteSheet("graphics/civilians.png", 6);
+        image.add("walk", [0, 1], 4, true);
+        image.play("walk");
+        image.originY = image.height - image.width / 2;
+        graphic = image;
         direction = new Point();
         if (angle < 0)
         {
@@ -35,8 +39,12 @@ class Civilian extends Entity
             direction.y = Math.sin(angle) * WalkSpeed;
         }
 
-        ImageFactory.setEntityHitboxTo(this, img);
+        ImageFactory.setEntityHitboxTo(this, image);
         this.hud = hud;
+    }
+
+    function updateGraphics()
+    {
     }
 
     override public function update():Void
@@ -52,6 +60,7 @@ class Civilian extends Entity
         moveBy(direction.x, direction.y, CityLayout.CollisionType);
         if (x < 0 || HXP.width < x) { direction.x *= -1; }
         if (y < 0 || HXP.height < y) { direction.y *= -1; }
+        image.flipped = direction.x < 0;
 
         layer = ZOrder.layerByY(y);
     }
@@ -59,6 +68,7 @@ class Civilian extends Entity
     override public function moveCollideX(e:Entity):Bool
     {
         direction.x *= -1;
+        image.flipped = direction.x < 0;
         return super.moveCollideX(e);
     }
 
