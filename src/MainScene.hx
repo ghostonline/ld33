@@ -14,6 +14,8 @@ class MainScene extends Scene
 
     public override function begin()
     {
+        add(new Tutorial());
+
         hud = new HUD();
         add(hud);
 

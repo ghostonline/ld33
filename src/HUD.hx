@@ -8,6 +8,7 @@ import com.haxepunk.graphics.Graphiclist;
 
 class HUD extends Entity
 {
+    static inline var StartingHealth = 20;
     static inline var BulletFlashTime = 0.25;
     static inline var ScoreDigits = 10;
     static inline var HumanScore = 100;
@@ -36,7 +37,7 @@ class HUD extends Entity
         flashTimer = flashTotal = 0;
         graphics.add(flash);
 
-        healthBar = new HealthBar(graphics);
+        healthBar = new HealthBar(graphics, StartingHealth);
 
         score = 0;
         scoreText = new Text();
