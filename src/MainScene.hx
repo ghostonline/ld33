@@ -21,7 +21,6 @@ class MainScene extends Scene
 
         policeSpawnTimer = PoliceSpawnInterval;
         policeSpawnLanes = [
-            40,
             160,
             165,
             170,
