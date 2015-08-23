@@ -1,6 +1,7 @@
 package ;
 
 import com.haxepunk.Entity;
+import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import openfl.geom.Point;
@@ -28,20 +29,27 @@ class Police extends Entity
     var hud:HUD;
     var sprite:Spritemap;
     var spriteDead:Spritemap;
+    var shadow:Image;
 
     public function new(x:Float, y:Float, hud:HUD)
     {
         super(x, y);
         this.hud = hud;
+        shadow = ImageFactory.createImage("graphics/walkshadow.png");
+        shadow.alpha = 0.25;
+        shadow.y += 6;
+        addGraphic(shadow);
         sprite = ImageFactory.createSpriteSheet("graphics/police.png", 7);
         sprite.add("walk", [0, 1], 8, true);
         sprite.add("aim", [2]);
         sprite.add("fire", [3]);
         sprite.originY = sprite.height - sprite.width / 2;
-        graphic = sprite;
+        addGraphic(sprite);
         spriteDead = ImageFactory.createSpriteSheet("graphics/police_dead.png", 14);
         spriteDead.add("dead_down", [0]);
         spriteDead.add("dead_up", [1]);
+        spriteDead.visible = false;
+        addGraphic(spriteDead);
         direction = new Point();
         ImageFactory.setEntityHitboxTo(this, sprite);
         decisionTimer = 0;
@@ -93,9 +101,10 @@ class Police extends Entity
             direction.x = x - MonsterAttack.x;
             direction.y = y - MonsterAttack.y;
             direction.normalize(WalkSpeed);
-            graphic = spriteDead;
+            spriteDead.visible = true;
+            sprite.visible = false;
             spriteDead.flipped = direction.x < 0;
-
+            shadow.y -= 2;
             if (direction.y > 0) { spriteDead.play("dead_down"); }
             else { spriteDead.play("dead_up"); }
             state = AIState.Dead;
