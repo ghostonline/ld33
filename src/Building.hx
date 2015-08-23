@@ -6,6 +6,7 @@ import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.utils.Ease;
 import com.haxepunk.utils.Input;
+import com.haxepunk.HXP;
 
 class Building extends Entity
 {
@@ -13,6 +14,8 @@ class Building extends Entity
     static inline var FloorHealth = 6;
     static inline var PunchParticleCount = 4;
     static inline var CollapseParticleCount = 20;
+    static inline var ShiverOffset = 2;
+    static inline var ShiverDuration = 0.25;
 
     var sprite:Spritemap;
     var health:Int;
@@ -27,6 +30,7 @@ class Building extends Entity
     var smoke:Emitter;
     var emitterX:Float;
     var emitterY:Float;
+    var shiverTimer:Float;
 
     public function new(x:Float=0, y:Float=0, population:Population, hud:HUD, city:CityLayout, cityTileX:Int, cityTileY:Int)
     {
@@ -91,13 +95,31 @@ class Building extends Entity
                 hud.smashFloor();
                 health = FloorHealth;
                 burstSmoke(CollapseParticleCount);
+                hud.shake();
+            }
+            else
+            {
+                shiverTimer = ShiverDuration;
             }
             healthBar.scaleX = healthBarScale * health / FloorHealth;
-            hud.shake();
             burstSmoke(PunchParticleCount);
         }
 
         layer = ZOrder.layerByY(y);
+
+        if (shiverTimer > 0)
+        {
+            shiverTimer -= HXP.elapsed;
+            var dx = (HXP.random - 0.5) * ShiverOffset;
+            var dy = (HXP.random - 0.5) * ShiverOffset;
+            if (shiverTimer <= 0)
+            {
+                dx = 0;
+                dy = 0;
+            }
+            sprite.x = dx;
+            sprite.y = dy;
+        }
     }
 
     function burstSmoke(count:Int)
