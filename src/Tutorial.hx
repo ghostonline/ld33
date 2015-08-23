@@ -54,8 +54,8 @@ class Tutorial extends Entity
         }
         lineY += padding;
         {
-            var icon = ImageFactory.createSpriteSheet("graphics/civilians.png", 12);
-            icon.add("loop", [0, 1], 6, true);
+            var icon = ImageFactory.createSpriteSheet("graphics/civilians.png", 12, 8);
+            icon.add("loop", [0, 1, 0, 1, 0, 1, 4, 5, 4, 5, 4, 5, 8, 9, 8, 9, 8, 9, 12, 13, 12, 13, 12, 13], 6, true);
             icon.play("loop");
             icon.x = iconX;
             icon.y = lineY;

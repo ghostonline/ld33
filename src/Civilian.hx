@@ -21,10 +21,15 @@ class Civilian extends Entity
     public function new(hud:HUD, x:Float, y:Float, angle:Float=-1)
     {
         super(x, y);
-        image = ImageFactory.createSpriteSheet("graphics/civilians.png", 12);
-        image.add("walk", [0, 1], 4, true);
-        image.add("dead_up", [2]);
-        image.add("dead_down", [3]);
+        image = ImageFactory.createSpriteSheet("graphics/civilians.png", 12, 8);
+        var variantOffset = HXP.rand(4) * 4;
+        var walkFrameA = variantOffset;
+        var walkFrameB = variantOffset + 1;
+        var deadFrameA = variantOffset + 2;
+        var deadFrameB = variantOffset + 3;
+        image.add("walk", [walkFrameA, walkFrameB], 4, true);
+        image.add("dead_up", [deadFrameA]);
+        image.add("dead_down", [deadFrameB]);
         image.play("walk");
         image.originY = image.height - image.width / 2;
         graphic = image;
