@@ -16,14 +16,16 @@ class Building extends Entity
     static inline var CollapseParticleCount = 20;
     static inline var ShiverOffset = 2;
     static inline var ShiverDuration = 0.25;
+    static inline var HealthBarOffset = -73;
+    static inline var StageCountOffset = -85;
 
     var sprite:Spritemap;
     var health:Int;
-    var healthBar:Image;
+    var healthBar:Spritemap;
+    var stageCount:Spritemap;
     var stage:Int;
     var population:Population;
     var hud:HUD;
-    var healthBarScale:Float;
     var city:CityLayout;
     var cityTileX:Int;
     var cityTileY:Int;
@@ -47,17 +49,21 @@ class Building extends Entity
         emitterX = -sprite.originX * sprite.scale;
         emitterY = -sprite.originY * sprite.scale;
 
+        health = FloorHealth;
+        healthBar = ImageFactory.createSpriteSheet("graphics/buildingbar.png", 27);
+        healthBar.y = HealthBarOffset;
+        addGraphic(healthBar);
+
+        stageCount = ImageFactory.createSpriteSheet("graphics/counter.png", 4);
+        stageCount.y = StageCountOffset;
+        addGraphic(stageCount);
+
         smoke = new Emitter("graphics/smoke.png", 30);
         addGraphic(smoke);
         var particle = smoke.newType("smoke", [0,1,2,3]);
         particle.setAlpha(1, 0);
         particle.setMotion(0, 20, 1, 360, 10, 0.5, Ease.cubeOut);
         particle.setGravity();
-
-        health = FloorHealth;
-        healthBar = ImageFactory.createRect(20, 2, 0x00FF00);
-        healthBarScale = healthBar.scaleX;
-        addGraphic(healthBar);
 
         stage = 0;
         setStage(stage);
@@ -75,6 +81,7 @@ class Building extends Entity
         {
             setHitbox();
             healthBar.visible = false;
+            stageCount.visible = false;
             sprite.visible = false;
         }
         city.setBuildingType(cityTileX, cityTileY, idx);
@@ -101,7 +108,9 @@ class Building extends Entity
             {
                 shiverTimer = ShiverDuration;
             }
-            healthBar.scaleX = healthBarScale * health / FloorHealth;
+            healthBar.frame = healthBar.frameCount - health - 1;
+            stageCount.frame = stage;
+            stageCount.visible = stage < 2;
             burstSmoke(PunchParticleCount);
         }
 
@@ -119,6 +128,10 @@ class Building extends Entity
             }
             sprite.x = dx;
             sprite.y = dy;
+            healthBar.x = dx;
+            healthBar.y = HealthBarOffset + dy;
+            stageCount.x = dx;
+            stageCount.y = StageCountOffset + dy;
         }
     }
 
