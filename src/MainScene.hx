@@ -9,15 +9,27 @@ class MainScene extends Scene
     static inline var PoliceIntervalDecrease = 0.333;
 
     var tutorial:Tutorial;
+    var endgame:EndGame;
     var population:Population;
     var hud:HUD;
     var policeSpawnTimer:Float;
     var policeSpawnLanes:Array<Int>;
+    var startTutorial:Bool;
+
+    public function new(tutorial:Bool = true)
+    {
+        super();
+        startTutorial = tutorial;
+        endgame = null;
+    }
 
     public override function begin()
     {
-        tutorial = new Tutorial();
-        add(tutorial);
+        if (startTutorial)
+        {
+            tutorial = new Tutorial();
+            add(tutorial);
+        }
 
         hud = new HUD();
         add(hud);
@@ -35,8 +47,9 @@ class MainScene extends Scene
         ];
 
         var layout = new CityLayout();
-        layout.generateBuildings(this, population, hud);
+        var buildingCount = layout.generateBuildings(this, population, hud);
         add(layout);
+        hud.setTotalFloorCount(buildingCount * 3);
     }
 
     function spawnCop()
@@ -58,11 +71,28 @@ class MainScene extends Scene
                 remove(tutorial);
                 tutorial = null;
             }
-
             return;
         }
 
-        if (policeSpawnTimer > 0)
+        if (endgame != null)
+        {
+            return;
+        }
+
+        if (hud.killCops())
+        {
+            endgame = new EndGame(true);
+            add(endgame);
+            return;
+        }
+        else if (!hud.isAlive())
+        {
+            endgame = new EndGame(false);
+            add(endgame);
+            return;
+        }
+
+        if (policeSpawnTimer > 0 && !hud.killCops())
         {
             policeSpawnTimer -= HXP.elapsed;
             if (policeSpawnTimer <= 0)

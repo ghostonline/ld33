@@ -24,11 +24,13 @@ class HUD extends Entity
     var scoreText:Text;
     var score:Int;
     public var floorSmashed(default, null):Int;
+    var totalFloorCount:Int;
 
     public function new()
     {
         super(0, 0);
         layer = ZOrder.HUD;
+        totalFloorCount = 0;
 
         var graphics = new Graphiclist();
 
@@ -48,6 +50,11 @@ class HUD extends Entity
         shakeTimer = 0;
         floorSmashed = 0;
         graphic = graphics;
+    }
+
+    public function setTotalFloorCount(count:Int)
+    {
+        totalFloorCount = count;
     }
 
     public function shake()
@@ -76,6 +83,16 @@ class HUD extends Entity
     {
         score += HumanScore;
         updateScore();
+    }
+
+    public function killCops()
+    {
+        return floorSmashed >= totalFloorCount;
+    }
+
+    public function isAlive()
+    {
+        return healthBar.health > 0;
     }
 
     function updateScore()

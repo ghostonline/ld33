@@ -120,5 +120,6 @@ class CityLayout extends Entity
             var building = new Building(x, y, population, hud, this, pos.x, pos.y);
             scene.add(building);
         }
+        return buildings.length;
     }
 }

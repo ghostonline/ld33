@@ -16,7 +16,7 @@ class HealthBar
     static inline var BottomID = 7;
 
     public var bar(default, null):Tilemap;
-    var health:Int;
+    public var health(default, null):Int;
     var emptyIDs:Array<Int>;
     var startingHealth:Int;
 

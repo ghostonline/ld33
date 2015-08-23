@@ -94,7 +94,7 @@ class Building extends Entity
     {
         super.update();
 
-        if (Input.mousePressed && collidePoint(x, y, Input.mouseX, Input.mouseY))
+        if (Input.mousePressed && collidePoint(x, y, Input.mouseX, Input.mouseY) && hud.isAlive())
         {
             --health;
             if (health <= 0)
