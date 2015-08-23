@@ -4,11 +4,11 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Text;
 import com.haxepunk.HXP;
+import com.haxepunk.graphics.Graphiclist;
 
 class HUD extends Entity
 {
     static inline var BulletFlashTime = 0.25;
-    static inline var StartingHealth = 15;
     static inline var ScoreDigits = 10;
     static inline var HumanScore = 100;
     static inline var FloorScore = 500;
@@ -19,7 +19,7 @@ class HUD extends Entity
     var flashTimer:Float;
     var flashTotal:Float;
     var shakeTimer:Float;
-    var healthBar:Array<Image>;
+    var healthBar:HealthBar;
     var scoreText:Text;
     var score:Int;
     public var floorSmashed(default, null):Int;
@@ -29,31 +29,24 @@ class HUD extends Entity
         super(0, 0);
         layer = ZOrder.HUD;
 
+        var graphics = new Graphiclist();
+
         flash = Image.createRect(HXP.width, HXP.height, 0xFF3333);
         flash.alpha = 0;
         flashTimer = flashTotal = 0;
-        addGraphic(flash);
+        graphics.add(flash);
 
-        healthBar = new Array<Image>();
-        for (ii in 0...StartingHealth)
-        {
-            var bar = ImageFactory.createRect(10, 2, 0x33FF33);
-            var barSpacing = bar.scaledHeight + 2;
-
-            bar.x = HXP.width - 20;
-            bar.y = HXP.height - 20 - barSpacing * ii;
-            addGraphic(bar);
-            healthBar.push(bar);
-        }
+        healthBar = new HealthBar(graphics);
 
         score = 0;
         scoreText = new Text();
         scoreText.x = 20;
         scoreText.y = 20;
-        addGraphic(scoreText);
+        graphics.add(scoreText);
         updateScore();
         shakeTimer = 0;
         floorSmashed = 0;
+        graphic = graphics;
     }
 
     public function shake()
@@ -67,11 +60,7 @@ class HUD extends Entity
         flashTotal = flashTimer = BulletFlashTime;
         flash.alpha = flashTimer / flashTotal;
 
-        if (healthBar.length > 0)
-        {
-            var bar = healthBar.pop();
-            bar.visible = false;
-        }
+        healthBar.removeHealth(1);
         shakeTimer = ShotShakeTime;
     }
 
