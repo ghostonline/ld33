@@ -5,7 +5,6 @@ import com.haxepunk.graphics.Emitter;
 import com.haxepunk.graphics.Image;
 import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.utils.Ease;
-import com.haxepunk.utils.Input;
 import com.haxepunk.HXP;
 
 class Building extends Entity

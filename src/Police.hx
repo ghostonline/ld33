@@ -4,7 +4,6 @@ import com.haxepunk.Entity;
 import com.haxepunk.graphics.Spritemap;
 import com.haxepunk.HXP;
 import openfl.geom.Point;
-import com.haxepunk.utils.Input;
 
 enum AIState
 {
@@ -91,8 +90,8 @@ class Police extends Entity
 
         if (state != AIState.Dead && MonsterAttack.stompFloor && collideRect(x, y, MonsterAttack.x - StompRange / 2, MonsterAttack.y - StompRange / 2, StompRange, StompRange))
         {
-            direction.x = x - Input.mouseX;
-            direction.y = y - Input.mouseY;
+            direction.x = x - MonsterAttack.x;
+            direction.y = y - MonsterAttack.y;
             direction.normalize(WalkSpeed);
             graphic = spriteDead;
             spriteDead.flipped = direction.x < 0;

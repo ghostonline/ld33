@@ -7,7 +7,6 @@ import com.haxepunk.HXP;
 import com.haxepunk.Mask;
 import com.haxepunk.graphics.Image;
 import openfl.geom.Point;
-import com.haxepunk.utils.Input;
 
 class Civilian extends Entity
 {
@@ -56,8 +55,8 @@ class Civilian extends Entity
         if (!dead && MonsterAttack.stompFloor && collideRect(x, y, MonsterAttack.x - StompRange / 2, MonsterAttack.y - StompRange / 2, StompRange, StompRange))
         {
             hud.smashHuman();
-            direction.x = x - Input.mouseX;
-            direction.y = y - Input.mouseY;
+            direction.x = x - MonsterAttack.x;
+            direction.y = y - MonsterAttack.y;
             direction.normalize(WalkSpeed);
 
             if (direction.y > 0) { image.play("dead_down"); }
