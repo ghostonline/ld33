@@ -89,7 +89,7 @@ class Police extends Entity
 
         if (state == AIState.Dead) { direction.x *= 0.95; direction.y *= 0.95; }
 
-        if (state != AIState.Dead && ((Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange) && hud.isAlive()) || hud.killCops()))
+        if (state != AIState.Dead && MonsterAttack.stompFloor && collideRect(x, y, MonsterAttack.x - StompRange / 2, MonsterAttack.y - StompRange / 2, StompRange, StompRange))
         {
             direction.x = x - Input.mouseX;
             direction.y = y - Input.mouseY;

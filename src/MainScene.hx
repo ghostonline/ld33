@@ -64,6 +64,8 @@ class MainScene extends Scene
     {
         super.update();
 
+        MonsterAttack.reset();
+
         if (tutorial != null)
         {
             if (Input.mousePressed)
@@ -91,6 +93,8 @@ class MainScene extends Scene
             add(endgame);
             return;
         }
+
+        MonsterAttack.update(hud, this);
 
         if (policeSpawnTimer > 0 && !hud.killCops())
         {

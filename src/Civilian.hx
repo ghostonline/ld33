@@ -53,7 +53,7 @@ class Civilian extends Entity
 
         if (dead) { direction.x *= 0.95; direction.y *= 0.95; }
 
-        if (!dead && Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange) && hud.isAlive())
+        if (!dead && MonsterAttack.stompFloor && collideRect(x, y, MonsterAttack.x - StompRange / 2, MonsterAttack.y - StompRange / 2, StompRange, StompRange))
         {
             hud.smashHuman();
             direction.x = x - Input.mouseX;
