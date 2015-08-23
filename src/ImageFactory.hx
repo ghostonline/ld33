@@ -24,6 +24,15 @@ class ImageFactory
         return img;
     }
 
+    public static function createImage(file:String)
+    {
+        var img = new Image(file);
+        img.scale = 2;
+        img.smooth = false;
+        img.centerOrigin();
+        return img;
+    }
+
     public static function setEntityHitboxTo(entity:Entity, image:Image)
     {
         entity.setHitbox(

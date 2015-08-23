@@ -16,11 +16,16 @@ class Civilian extends Entity
     var direction:Point;
     var hud:HUD;
     var image:Spritemap;
+    var shadow:Image;
     var dead:Bool;
 
     public function new(hud:HUD, x:Float, y:Float, angle:Float=-1)
     {
         super(x, y);
+        shadow = ImageFactory.createImage("graphics/walkshadow.png");
+        shadow.alpha = 0.25;
+        shadow.y += 12;
+        addGraphic(shadow);
         image = ImageFactory.createSpriteSheet("graphics/civilians.png", 12, 8);
         var variantOffset = HXP.rand(4) * 4;
         var walkFrameA = variantOffset;
@@ -32,7 +37,7 @@ class Civilian extends Entity
         image.add("dead_down", [deadFrameB]);
         image.play("walk");
         image.originY = image.height - image.width / 2;
-        graphic = image;
+        addGraphic(image);
         direction = new Point();
         if (angle < 0)
         {
@@ -67,6 +72,7 @@ class Civilian extends Entity
             if (direction.y > 0) { image.play("dead_down"); }
             else { image.play("dead_up"); }
             dead = true;
+            shadow.y -= 6;
             setHitbox();
         }
 
