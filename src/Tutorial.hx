@@ -37,8 +37,8 @@ class Tutorial extends Entity
         addGraphic(continueText);
 
         var lineY = background.y + 150;
-        var iconX = background.x + 50;
-        var labelX = background.x + 100;
+        var iconX = background.x + 40;
+        var labelX = background.x + 80;
         var padding = 60;
         {
             var icon = ImageFactory.createSpriteSheet("graphics/buildingbar.png", 27);
@@ -47,7 +47,7 @@ class Tutorial extends Entity
             icon.x = iconX;
             icon.y = lineY;
             addGraphic(icon);
-            var legend = new Text("Destroy buildings for points", 0, 0, background.width - 100, 0, { wordWrap:true } );
+            var legend = new Text("Destroy all buildings for points and win the game", 0, 0, background.width - 100, 0, { wordWrap:true } );
             legend.x = labelX;
             legend.y = lineY - Math.floor(legend.textHeight / 2);
             addGraphic(legend);
