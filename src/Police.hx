@@ -115,6 +115,7 @@ class Police extends Entity
         {
             if (decisionTimer <= 0) {
                 hud.hitWithBullet();
+                SoundPlayer.shoot();
                 dashRandom();
             }
         }

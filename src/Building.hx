@@ -106,10 +106,12 @@ class Building extends Entity
                 health = FloorHealth;
                 burstSmoke(CollapseParticleCount);
                 hud.shake();
+                SoundPlayer.collapse();
             }
             else
             {
                 shiverTimer = ShiverDuration;
+                SoundPlayer.shake();
             }
             healthBar.frame = healthBar.frameCount - health - 1;
             stageCount.frame = stage;

@@ -3,12 +3,14 @@ import com.haxepunk.HXP;
 
 class Main extends Engine
 {
+    var soundPlayer:SoundPlayer;
 
     override public function init()
     {
 #if debug
         HXP.console.enable();
 #end
+        soundPlayer = new SoundPlayer();
         HXP.scene = new MainScene();
     }
 
