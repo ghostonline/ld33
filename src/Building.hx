@@ -71,7 +71,7 @@ class Building extends Entity
             {
                 ++stage;
                 setStage(stage);
-                population.spawnCiviliansFromBuilding(x, y + 35, FloorPopulation);
+                population.spawnCiviliansFromBuilding(x, y + 48, FloorPopulation);
                 hud.smashFloor();
                 health = FloorHealth;
             }
