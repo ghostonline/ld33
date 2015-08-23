@@ -11,6 +11,7 @@ enum AIState
     EnteringScreen;
     Running;
     Shooting;
+    Dead;
 }
 
 class Police extends Entity
@@ -27,6 +28,7 @@ class Police extends Entity
     var startDistance:Float;
     var hud:HUD;
     var sprite:Spritemap;
+    var spriteDead:Spritemap;
 
     public function new(x:Float, y:Float, hud:HUD)
     {
@@ -38,6 +40,9 @@ class Police extends Entity
         sprite.add("fire", [3]);
         sprite.originY = sprite.height - sprite.width / 2;
         graphic = sprite;
+        spriteDead = ImageFactory.createSpriteSheet("graphics/police_dead.png", 14);
+        spriteDead.add("dead_down", [0]);
+        spriteDead.add("dead_up", [1]);
         direction = new Point();
         ImageFactory.setEntityHitboxTo(this, sprite);
         decisionTimer = 0;
@@ -75,18 +80,29 @@ class Police extends Entity
     {
         super.update();
 
-        if (Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
+        if (state == AIState.Dead) { direction.x *= 0.95; direction.y *= 0.95; }
+
+        if (state != AIState.Dead && Input.mousePressed && collideRect(x, y, Input.mouseX - StompRange / 2, Input.mouseY - StompRange / 2, StompRange, StompRange))
         {
-            scene.remove(this);
+            direction.x = x - Input.mouseX;
+            direction.y = y - Input.mouseY;
+            direction.normalize(WalkSpeed);
+            graphic = spriteDead;
+            spriteDead.flipped = direction.x < 0;
+
+            if (direction.y > 0) { spriteDead.play("dead_down"); }
+            else { spriteDead.play("dead_up"); }
+            state = AIState.Dead;
+            setHitbox();
         }
 
         decisionTimer -= HXP.elapsed;
-        if (state == AIState.Running)
+        if (state == AIState.Running || state == AIState.Dead)
         {
             moveBy(direction.x, direction.y, CityLayout.CollisionType);
             if (x < 0 || HXP.width < x) { direction.x *= -1; x = HXP.clamp(x, 0, HXP.width); }
             if (y < 0 || HXP.height < y) { direction.y *= -1; y = HXP.clamp(y, 0, HXP.height); }
-            if (decisionTimer <= 0) { shoot(); }
+            if (decisionTimer <= 0 && state == AIState.Running) { shoot(); }
         }
         else if (state == AIState.Shooting)
         {
